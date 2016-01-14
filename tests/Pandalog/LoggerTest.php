@@ -4,6 +4,8 @@ namespace Pandalog;
 
 use Pandalog\Logger;
 use Pandalog\Handler\FileHandler;
+use Pandalog\Processor\PushProcessor;
+use Pandalog\Processor\LogIdProcessor;
 
 /**
  * LoggerTest
@@ -20,6 +22,8 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $hander = new FileHandler();
         $hander->useDaily('/Users/SherlockRen/Data/logs/sites/a/b/a.log');
         $logger->setHandler($hander);
+        $logger->pushProcessor(new LogIdProcessor());
+        $logger->pushProcessor(new PushProcessor(['host_ip', 'product'], ['12312', '123']));
         $this->assertTrue($logger->warning('test'));
     }   
 } // END class LoggerTest extends \PHPUnit_Framework_TestCase

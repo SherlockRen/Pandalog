@@ -195,6 +195,7 @@ class Logger implements LoggerInterface
 
         $levelName = static::getLevelName($level);
         $record = array(
+            'date'  => date('Y-m-d H:i:s'),
             'code'  => $level,
             'level' => $levelName,
             'msg'   => $message,
