@@ -22,5 +22,10 @@
     },
     "autoload-dev": {
         "psr-4": {"Pandalog\\": "tests/Pandalog"}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.1-dev"
+        }
     }
 }
