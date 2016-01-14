@@ -193,13 +193,13 @@ class Logger implements LoggerInterface
             return false;
         }
 
-        // get level name
         $levelName = static::getLevelName($level);
-
         $record = array(
-            'msg'   => $message,
+            'code'  => $level,
             'level' => $levelName,
-            'trace' => $trace
+            'msg'   => $message,
+            'trace' => $trace,
+            'timestamp' => time(),
         );
 
         foreach ($this->processors as $processor) {
