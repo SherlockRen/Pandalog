@@ -106,7 +106,7 @@ class Logger implements LoggerInterface
      * @param HandlerInterface   $handler   Optional stack of handlers, the first one in the array is called first, etc.
      * @param callable[]         $processors Optional array of processors
      */
-    public function __construct($name, HandlerInterface $handler = null, array $processors = array())
+    public function __construct($name, HandlerInterface $handler = null, $processors = array())
     {
         $this->name    = $name;
         $this->handler = $handler;
@@ -186,7 +186,7 @@ class Logger implements LoggerInterface
      * @param  string  $message The log message
      * @return Boolean Whether the record has been processed
      */
-    public function addRecord(int $level, string $message, array $trace = array())
+    public function addRecord($level, $message, array $trace = array())
     {
         if ( ! $this->handler) {
             throw new \LogicException('hander error: please set a hander');

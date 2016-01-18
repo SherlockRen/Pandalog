@@ -85,7 +85,7 @@ class FileHandler implements HandlerInterface
      * @return $this
      * @author Sherlock Ren <sherlock_ren@icloud.com>
      */
-    public function setLink(string $link)
+    public function setLink($link)
     {
         $this->link = $link;
         return $this;
@@ -98,7 +98,7 @@ class FileHandler implements HandlerInterface
      * @return $this
      * @author Sherlock Ren <sherlock_ren@icloud.com>
      */
-    public function setLock(boolean $lock)
+    public function setLock($lock)
     {
         $this->lock = $lock;
         return $this;
@@ -111,7 +111,7 @@ class FileHandler implements HandlerInterface
      * @return $this
      * @author Sherlock Ren <sherlock_ren@icloud.com>
      */
-    public function useDaily(string $link)
+    public function useDaily($link)
     {
         $dirname  = dirname($link);
         $basename = basename($link);
