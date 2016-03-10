@@ -32,6 +32,18 @@ class LogIdProcessor
      */
     protected function createLogId()
     {
+        if (
+            ! isset($_SERVER['HTTP_X_YMT_LOGID']) 
+            && intval(trim($_SERVER['HTTP_X_YMT_LOGID'])) !== 0
+        ) {
+            return trim($_SERVER['HTTP_X_YMT_LOGID']);
+        }
+        if (
+            isset($_REQUEST['logid']) 
+            && intval($_REQUEST['logid']) !== 0
+        ) {
+            return trim($_REQUEST['logid']);
+        }
         $array  = gettimeofday();
         if (isset($_SERVER['REMOTE_ADDR'])) {
             mt_srand(ip2long($_SERVER['REMOTE_ADDR']));
