@@ -32,21 +32,23 @@ class LogIdProcessor
      */
     protected function createLogId()
     {
+        $server  = $_SERVER;
+        $request = $_REQUEST;
         if (
-            ! isset($_SERVER['HTTP_X_YMT_LOGID']) 
-            && intval(trim($_SERVER['HTTP_X_YMT_LOGID'])) !== 0
+            isset($server['HTTP_X_YMT_LOGID']) 
+            && intval(trim($server['HTTP_X_YMT_LOGID'])) !== 0
         ) {
-            return trim($_SERVER['HTTP_X_YMT_LOGID']);
+            return trim($server['HTTP_X_YMT_LOGID']);
         }
         if (
-            isset($_REQUEST['logid']) 
-            && intval($_REQUEST['logid']) !== 0
+            isset($request['logid']) 
+            && intval($request['logid']) !== 0
         ) {
-            return trim($_REQUEST['logid']);
+            return trim($request['logid']);
         }
         $array  = gettimeofday();
-        if (isset($_SERVER['REMOTE_ADDR'])) {
-            mt_srand(ip2long($_SERVER['REMOTE_ADDR']));
+        if (isset($server['REMOTE_ADDR'])) {
+            mt_srand(ip2long($server['REMOTE_ADDR']));
         }
         $logId  = sprintf('%04d', mt_rand(0, 999));
         $logId .= sprintf('%03d', rand(0, 999));
