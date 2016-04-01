@@ -194,13 +194,13 @@ class Logger implements LoggerInterface
         }
 
         $levelName = static::getLevelName($level);
+        $timestamp = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
         $record = array(
-            'date'  => date('Y-m-d H:i:s'),
-            'code'  => $level,
+            'date'  => date('Y-m-d H:i:s', $timestamp),
             'level' => $levelName,
             'msg'   => $message,
             'trace' => $trace,
-            'timestamp' => time(),
+            'timestamp' => $timestamp
         );
 
         foreach ($this->processors as $processor) {
@@ -377,6 +377,35 @@ class Logger implements LoggerInterface
     public function emergency($message, array $trace = array())
     {
         return $this->addRecord(static::EMERGENCY, $message, $trace);
+    }
+
+    /**
+     * Quick Initialization
+     *
+     * @param  array 
+     * [
+     *    'name' => 'logname',
+     *    'path' => '/tmp/test.log',
+     *    'product' => 'supply',
+     *    'module'  => 'order',
+     * ]
+     * @return logger
+     * @author Sherlock Ren <sherlock_ren@icloud.com>
+     */
+    public static function quickInit($params)
+    {
+        static $logger = [];
+        $md5Key = md5(json_encode($params));
+        if ( ! isset($logger[$md5Key])) {
+            $params['product'] = isset($params['product']) ? $params['product'] : '';
+            $params['module']  = isset($params['module']) ? $params['module'] : '';
+            $hander = new \Pandalog\Handler\FileHandler();
+            $hander->useDaily($params['path']);
+            $processor = new \Pandalog\Processor\YmtProcessor($params['product'], $params['module']);
+            $logger[$md5Key] = new Logger($params['name'], $hander, [$processor]);
+        }   
+
+        return $logger[$md5Key];
     }
 
 }

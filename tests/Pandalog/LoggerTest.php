@@ -25,5 +25,13 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $logger->pushProcessor(new LogIdProcessor());
         $logger->pushProcessor(new PushProcessor(['host_ip', 'product'], ['12312', '123']));
         $this->assertTrue($logger->warning('test'));
+
+        $params = [
+            'name' => 'test',
+            'path' => '/Users/SherlockRen/Data/logs/sites/test.log',
+            'product' => 'supply',
+            'module'  => 'order'
+        ];
+        $this->assertTrue(Logger::quickInit($params)->warning('test'));
     }   
 } // END class LoggerTest extends \PHPUnit_Framework_TestCase
