@@ -28,7 +28,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
 
         $params = [
             'name' => 'test',
-            'path' => '/Users/SherlockRen/Data/logs/sites/test.log',
+            'path' => '/Users/SherlockRen/Data/logs/sites/test.test.log',
             'product' => 'supply',
             'module'  => 'order'
         ];

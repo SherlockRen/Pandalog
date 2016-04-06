@@ -119,7 +119,14 @@ class FileHandler implements HandlerInterface
             throw new \InvalidArgumentException('invalid link: not find basename');
         }
         $dateString = date('Y-m-d');
-        $basename   = strpos($basename, '.') === false ? $basename . $dateString : str_replace('.', '-' . $dateString . '.', $basename);
+        if(strpos($basename, '.') === false) {
+            $basename = $basename . $dateString;
+        } else {
+            $basename = array_reverse(explode('.', $basename));
+            $basename[0] = $dateString . '.' . $basename[0];
+            $basename = implode('.', array_reverse($basename));
+        }
+
         $this->link = $dirname . '/' . $basename;
         return $this;
     }
