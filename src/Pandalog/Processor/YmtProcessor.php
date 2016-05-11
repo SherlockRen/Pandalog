@@ -114,7 +114,8 @@ class YmtProcessor
             ? $server['REMOTE_ADDR'] : '0.0.0.0'));
         //识别代理
         if (
-            isset($server['HTTP_X_FORWARDED_FOR']) 
+            ! isset($server['HTTP_X_REAL_IP'])
+            && isset($server['HTTP_X_FORWARDED_FOR']) 
             && $server['HTTP_X_FORWARDED_FOR'] 
         ) {
             $clientIp = explode(',', trim($server['HTTP_X_FORWARDED_FOR'], ','))[0];
