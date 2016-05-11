@@ -115,11 +115,11 @@ class YmtProcessor
         //识别代理
         if (
             isset($server['HTTP_X_FORWARDED_FOR']) 
-            && preg_match('/^10\./', $clientIp) 
-            && preg_match('/([\d\.]+)(\, 10\.([\d\.]+)){1,}$/', $server['HTTP_X_FORWARDED_FOR'], $res)
+            && $server['HTTP_X_FORWARDED_FOR'] 
         ) {
-            $clientIp = $res[1];
+            $clientIp = explode(',', trim($server['HTTP_X_FORWARDED_FOR'], ','))[0];
         }
+        
         return $clientIp;
     }
 
