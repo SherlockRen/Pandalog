@@ -102,12 +102,22 @@ class Logger implements LoggerInterface
     protected $processors;
 
     /**
+     * Date format
+     *
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d H:i:s';
+
+    /**
      * @param string             $name       The logging channel
      * @param HandlerInterface   $handler   Optional stack of handlers, the first one in the array is called first, etc.
      * @param callable[]         $processors Optional array of processors
      */
-    public function __construct($name, HandlerInterface $handler = null, $processors = array())
-    {
+    public function __construct(
+        $name, 
+        HandlerInterface $handler = null, 
+        $processors = array()
+    ) {
         $this->name    = $name;
         $this->handler = $handler;
         $this->processors = $processors;
@@ -178,6 +188,17 @@ class Logger implements LoggerInterface
     {
         return $this->processors;
     }
+    
+    /**
+     * set date format
+     *
+     * param string $format
+     * @author Sherlock Ren <sherlock_ren@icloud.com>
+     */
+    public function setDateFormat($format)
+    {
+        $this->dateFormat = $format;
+    }
 
     /**
      * Adds a log record.
@@ -186,8 +207,11 @@ class Logger implements LoggerInterface
      * @param  string  $message The log message
      * @return Boolean Whether the record has been processed
      */
-    public function addRecord($level, $message, array $trace = array())
-    {
+    public function addRecord(
+        $level, 
+        $message, 
+        array $trace = array()
+    ) {
         if ( ! $this->handler) {
             throw new \LogicException('hander error: please set a hander');
             return false;
@@ -196,7 +220,7 @@ class Logger implements LoggerInterface
         $levelName = static::getLevelName($level);
         $timestamp = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
         $record = array(
-            'date'  => date('Y-m-d H:i:s', $timestamp),
+            'date'  => date($this->dateFormat, $timestamp),
             'level' => $levelName,
             'msg'   => $message,
             'trace' => $trace,

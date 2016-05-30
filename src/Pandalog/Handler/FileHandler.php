@@ -66,13 +66,24 @@ class FileHandler implements HandlerInterface
     }
 
     /**
+     * __get
+     *
+     * @return void
+     * @author Sherlock Ren <sherlock_ren@icloud.com>
+     */
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+
+    /**
      * set formatter
      *
      * @param  resource $formatter
      * @return $this
      * @author Sherlock Ren <sherlock_ren@icloud.com>
      */
-    public function setFormattter(FormatterInterface $formatter)
+    public function setFormatter(FormatterInterface $formatter)
     {
         $this->formatter = $formatter;
         return $this;
