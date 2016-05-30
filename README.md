@@ -53,7 +53,7 @@ $handler->handle(['test' => 'test']); //也可单独写文件使用
 // 注入文件驱动
 $log->pushHandler($handler);
 
-// 出入数据处理器
+// 注入数据处理器
 $log->pushProcessor(new LogIdProcessor()); // 添加logid
 $log->pushProcessor(new PushProcessor(['host_ip', 'product'], ['12312', '123'])); // 自定义存储内容
 
